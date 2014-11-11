@@ -2,8 +2,9 @@
 
 /**
  * ColorDebug
- * Version: 0.2 - Added CD_PERROR
- * Version: 0.1 - Initial version
+ * Version: 0.3 - Added CD_*****_NO_HEADER. Added scopes for each CD_printf macro.
+ * Version: 0.2 - Added CD_PERROR.
+ * Version: 0.1 - Initial version.
  *
  * Copyright: UC3M 2014 (C)
  * Author:
@@ -68,23 +69,39 @@ namespace ColorDebug {
 
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
-#define CD_PERROR(...) fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr, "[error] "); perror(""); fprintf(stderr,RESET);
+#define CD_PERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr, "[error] "); perror(""); fprintf(stderr,RESET);}
 
-#define CD_ERROR(...) fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define CD_ERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
-#define CD_WARNING(...) fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define CD_WARNING(...) {fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
-#define CD_SUCCESS(...) fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET); 
+#define CD_SUCCESS(...) {fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
-#define CD_INFO(...) do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0)
+#define CD_INFO(...) {do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0);}
 
-#define CD_DEBUG(...) fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);
+#define CD_DEBUG(...) {fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);}
+
+
+#define CD_ERROR_NO_HEADER(...) {fprintf(stderr,RED); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
+
+#define CD_WARNING_NO_HEADER(...) {fprintf(stderr,YELLOW); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
+
+#define CD_SUCCESS_NO_HEADER(...) {fprintf(stderr,GREEN); printf(__VA_ARGS__); fprintf(stderr,RESET);}
+
+#define CD_INFO_NO_HEADER(...) {do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0);}
+
+#define CD_DEBUG_NO_HEADER(...) {fprintf(stderr,BLUE); printf(__VA_ARGS__); fprintf(stderr,RESET);}
+
+
+
+
 
 } //ColorDebug
 
