@@ -12,3 +12,15 @@ project(ColorDebug)
 
 set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appended header dirs")
 
+# install target
+install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/ColorDebug.hpp"
+         DESTINATION include)
+
+# uninstall target
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ColorDebugConfigUninstall.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/ColorDebugConfigUninstall.cmake" IMMEDIATE @ONLY)
+
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ColorDebugConfigUninstall.cmake)
+
