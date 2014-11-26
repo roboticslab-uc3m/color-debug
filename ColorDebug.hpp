@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.4 - __func__ as __FUNCTION__ for VS2008.
  * Version: 0.3 - Added CD_*****_NO_HEADER. Added scopes for each CD_printf macro.
  * Version: 0.2 - Added CD_PERROR.
  * Version: 0.1 - Initial version.
@@ -21,6 +22,11 @@
 #include <string.h>  // strrchr
 
 namespace ColorDebug {
+
+//-- Thanks tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
+#if defined ( WIN32 )
+#define __func__ __FUNCTION__
+#endif
 
 //-- Thanks dalle @ http://stackoverflow.com/questions/1546789/clean-code-to-printf-size-t-in-c-or-nearest-equivalent-of-c99s-z-in-c
 #if defined(_MSC_VER)
