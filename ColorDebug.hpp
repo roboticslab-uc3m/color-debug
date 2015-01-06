@@ -110,8 +110,7 @@ namespace ColorDebug {
 
 #define CD_SUCCESS_NO_HEADER(...) {fprintf(stderr,GREEN); printf(__VA_ARGS__); fprintf(stderr,RESET);}
 
-#define CD_INFO_NO_HEADER(...) {do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0);}
+#define CD_INFO_NO_HEADER(...) {printf(__VA_ARGS__);}
 
 #define CD_DEBUG_NO_HEADER(...) {fprintf(stderr,BLUE); printf(__VA_ARGS__); fprintf(stderr,RESET);}
 
