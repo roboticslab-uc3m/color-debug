@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.8 - stderr only on warning and error.
  * Version: 0.7 - fix CD_INFO_NO_HEADER to not print header (thank you, tests).
  * Version: 0.6 - Show file name instead of full path - fix for windows.
  * Version: 0.5 - Drop CD_PERROR (recommend use of CD_ERROR_NO_HEADER instead).
@@ -95,25 +96,25 @@ namespace ColorDebug {
 #define CD_WARNING(...) {fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
-#define CD_SUCCESS(...) {fprintf(stderr,GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);}
+#define CD_SUCCESS(...) {printf(GREEN); do{printf("[success] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); printf(RESET);}
 
 #define CD_INFO(...) {do{printf("[info] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0);}
 
-#define CD_DEBUG(...) {fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                           printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);}
+#define CD_DEBUG(...) {printf(BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
+                           printf(__VA_ARGS__);} while(0); printf(RESET);}
 
 //-- CD_****_NO_HEADER defines.
 #define CD_ERROR_NO_HEADER(...) {fprintf(stderr,RED); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
 
 #define CD_WARNING_NO_HEADER(...) {fprintf(stderr,YELLOW); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
 
-#define CD_SUCCESS_NO_HEADER(...) {fprintf(stderr,GREEN); printf(__VA_ARGS__); fprintf(stderr,RESET);}
+#define CD_SUCCESS_NO_HEADER(...) {printf(GREEN); printf(__VA_ARGS__); printf(RESET);}
 
 #define CD_INFO_NO_HEADER(...) {printf(__VA_ARGS__);}
 
-#define CD_DEBUG_NO_HEADER(...) {fprintf(stderr,BLUE); printf(__VA_ARGS__); fprintf(stderr,RESET);}
+#define CD_DEBUG_NO_HEADER(...) {printf(BLUE); printf(__VA_ARGS__); printf(RESET);}
 
 
 //-- ------------------------ \end Real macros ------------------------ --//
