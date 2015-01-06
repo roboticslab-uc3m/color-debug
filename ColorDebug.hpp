@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.6 - Show file name instead of full path - fix for windows.
  * Version: 0.5 - Drop CD_PERROR (recommend use of CD_ERROR_NO_HEADER instead).
  * Version: 0.4 - __func__ as __FUNCTION__ for VS2008.
  * Version: 0.3 - Added CD_*****_NO_HEADER. Added scopes for each CD_printf macro.
@@ -55,8 +56,11 @@ namespace ColorDebug {
 
 //-- Show file name instead of full path.
 //-- Thanks: red1ynx @ http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
-#define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-// TODO For Windows use '\\' instead of '/'.
+#if defined ( WIN32 )  //-- For Windows use '\\' instead of '/'.
+  #define __REL_FILE__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+#else
+  #define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
+#endif
 
 //-- Color defines.
 //-- Thanks: http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
