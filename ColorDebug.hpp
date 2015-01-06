@@ -25,13 +25,13 @@
 
 namespace ColorDebug {
 
-//-- Fix for old Windows versions
+//-- Fix for old Windows versions.
 //-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
 #if defined ( WIN32 )
   #define __func__ __FUNCTION__
 #endif
 
-//-- Macros for size_t and similar across platforms-
+//-- Macros for size_t and similar across platforms.
 //-- Thanks: dalle @ http://stackoverflow.com/questions/1546789/clean-code-to-printf-size-t-in-c-or-nearest-equivalent-of-c99s-z-in-c
 #if defined(_MSC_VER)
   #define CD_SIZE_T    "%Iu"
