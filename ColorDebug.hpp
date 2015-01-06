@@ -24,12 +24,14 @@
 
 namespace ColorDebug {
 
-//-- Thanks tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
+//-- Fix for old Windows versions
+//-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
 #if defined ( WIN32 )
-#define __func__ __FUNCTION__
+  #define __func__ __FUNCTION__
 #endif
 
-//-- Thanks dalle @ http://stackoverflow.com/questions/1546789/clean-code-to-printf-size-t-in-c-or-nearest-equivalent-of-c99s-z-in-c
+//-- Macros for size_t and similar across platforms-
+//-- Thanks: dalle @ http://stackoverflow.com/questions/1546789/clean-code-to-printf-size-t-in-c-or-nearest-equivalent-of-c99s-z-in-c
 #if defined(_MSC_VER)
   #define CD_SIZE_T    "%Iu"
   #define CD_SSIZE_T   "%Id"
@@ -51,11 +53,13 @@ namespace ColorDebug {
   #endif
 #endif
 
-//-- Thanks red1ynx @ http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
+//-- Show file name instead of full path.
+//-- Thanks: red1ynx @ http://stackoverflow.com/questions/8487986/file-macro-shows-full-path
 #define __REL_FILE__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__)
-// For Windows use '\\' instead of '/'.
+// TODO For Windows use '\\' instead of '/'.
 
-// http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
+//-- Color defines.
+//-- Thanks: http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -74,8 +78,12 @@ namespace ColorDebug {
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-// http://en.wikipedia.org/wiki/Variadic_macro
-// http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
+
+//-- ------------------------ \begin Real macros ------------------------ --//
+
+//-- CD_**** defines.
+//-- Thanks: http://en.wikipedia.org/wiki/Variadic_macro
+//-- Thanks: http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
 #define CD_ERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                          fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
@@ -91,7 +99,7 @@ namespace ColorDebug {
 #define CD_DEBUG(...) {fprintf(stderr,BLUE); do{printf("[debug] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                            printf(__VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
-
+//-- CD_****_NO_HEADER defines.
 #define CD_ERROR_NO_HEADER(...) {fprintf(stderr,RED); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
 
 #define CD_WARNING_NO_HEADER(...) {fprintf(stderr,YELLOW); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET);}
@@ -104,8 +112,7 @@ namespace ColorDebug {
 #define CD_DEBUG_NO_HEADER(...) {fprintf(stderr,BLUE); printf(__VA_ARGS__); fprintf(stderr,RESET);}
 
 
-
-
+//-- ------------------------ \end Real macros ------------------------ --//
 
 } //ColorDebug
 
