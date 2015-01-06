@@ -11,3 +11,4 @@ set(COLOR_DEBUG_PART_OF_PROJECT TRUE)
 
 add_subdirectory(ColorDebug)  # ColorDebug sets COLOR_DEBUG_INCLUDE_DIRS
 
+[![Image](test/testColorDebug.png)](./) 
