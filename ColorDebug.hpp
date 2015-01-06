@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.7 - fix CD_INFO_NO_HEADER to not print header (thank you, tests).
  * Version: 0.6 - Show file name instead of full path - fix for windows.
  * Version: 0.5 - Drop CD_PERROR (recommend use of CD_ERROR_NO_HEADER instead).
  * Version: 0.4 - __func__ as __FUNCTION__ for VS2008.
