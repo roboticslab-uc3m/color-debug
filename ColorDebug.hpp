@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.5 - Drop CD_PERROR (recommend use of CD_ERROR_NO_HEADER instead).
  * Version: 0.4 - __func__ as __FUNCTION__ for VS2008.
  * Version: 0.3 - Added CD_*****_NO_HEADER. Added scopes for each CD_printf macro.
  * Version: 0.2 - Added CD_PERROR.
@@ -75,9 +76,6 @@ namespace ColorDebug {
 
 // http://en.wikipedia.org/wiki/Variadic_macro
 // http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
-#define CD_PERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
-                         fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr, "[error] "); perror(""); fprintf(stderr,RESET);}
-
 #define CD_ERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", __REL_FILE__, __LINE__, __func__); \
                          fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET);}
 
