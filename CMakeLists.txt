@@ -16,6 +16,11 @@ set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appende
 install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/ColorDebug.hpp"
          DESTINATION include)
 
+# export our variables to a ColorDebugConfig.cmake creation
+set(ColorDebug_INCLUDE_DIRS ${COLOR_DEBUG_INCLUDE_DIRS})
+configure_file(${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfig.cmake.in
+               ${CMAKE_BINARY_DIR}/ColorDebugConfig.cmake @ONLY)
+
 # uninstall target
 configure_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ColorDebugConfigUninstall.cmake.in"
