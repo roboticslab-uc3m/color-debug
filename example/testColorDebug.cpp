@@ -1,14 +1,14 @@
 // -*- mode:C++; tab-width:4; c-basic-offset:4; indent-tabs-mode:nil -*-
 
-//-- must be defined BEFORE including ColorDebug.hpp for now.
-//#define CD_FULL_FILE  //-- Can be globally managed from father CMake.
-//#define CD_HIDE_ERROR  //-- Can be globally managed from father CMake.
-//#define CD_HIDE_WARNING  //-- Can be globally managed from father CMake.
-//#define CD_HIDE_SUCCESS  //-- Can be globally managed from father CMake.
-//#define CD_HIDE_INFO  //-- Can be globally managed from father CMake.
-//#define CD_HIDE_DEBUG  //-- Can be globally managed from father CMake.
+//-- Hiding defines must be defined BEFORE including ColorDebug.hpp for now.
+//#define CD_HIDE_ERROR
+//#define CD_HIDE_WARNING
+//#define CD_HIDE_SUCCESS
+//#define CD_HIDE_INFO
+//#define CD_HIDE_DEBUG
 
 #include "../ColorDebug.hpp"
+
 
 int main(int argc, char *argv[]) {
 
