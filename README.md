@@ -13,4 +13,4 @@ Possible usages:
 
 For updated version, license and author information, see ColorDebug.hpp.
 
-[![Image](test/testColorDebug.png)](./)
+[![Image](example/testColorDebug.png)](./)
