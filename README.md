@@ -11,8 +11,6 @@ Possible usages:
 
 * Part of a project. You will be able to `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`. Note: In CMake, *before* you `add_subdirectory(ColorDebug)`, you must `set(COLOR_DEBUG_PART_OF_PROJECT TRUE)` to avoid a re-declaration of the `install` target.
 
-In any case, if you `find_package(ColorDebug)` 
-
 For updated version, license and author information, see ColorDebug.hpp.
 
 [![Image](test/testColorDebug.png)](./)
