@@ -1,5 +1,5 @@
-ColorDebug
-==========
+color-debug
+===========
 
 Color CLI logs and more. For updated version, license and author information, see ColorDebug.hpp.
 
