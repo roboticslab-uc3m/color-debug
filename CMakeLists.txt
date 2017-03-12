@@ -18,14 +18,14 @@ endif( )
 # set include directory
 set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 
-# standard installation paths
-include(GNUInstallDirs)
-
-# install target
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/ColorDebug.hpp"
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-
 if(NOT DEFINED PART_OF_EXISTING_PROJECT)
+    # standard installation paths
+    include(GNUInstallDirs)
+
+    # install target
+    install(FILES "${CMAKE_SOURCE_DIR}/ColorDebug.hpp"
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
     # store the package in the user registry
     export(PACKAGE ${PROJECT_NAME})
 
