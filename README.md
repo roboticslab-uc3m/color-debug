@@ -7,9 +7,9 @@ Color CLI logs and more. For updated version, license and author information, se
 
 Possible usages:
 
-* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
-* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `ColorDebug_DIR` environment variable to your `build` path. In CMake, you may load it with `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
 * As part of another project: copy this repository to the desired location inside your source tree and add `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})` in CMake.
 

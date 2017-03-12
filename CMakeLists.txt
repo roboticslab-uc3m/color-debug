@@ -7,12 +7,12 @@ cmake_minimum_required(VERSION 2.8.8)
 unset(PART_OF_EXISTING_PROJECT)
 
 if(NOT ${PROJECT_NAME} STREQUAL "Project")
-    message(STATUS "ColorDebug PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
+    message(STATUS "COLOR_DEBUG PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
     set(PART_OF_EXISTING_PROJECT "")
-else( )
-    project(ColorDebug)
-    message(STATUS "ColorDebug NOT PART_OF_EXISTING_PROJECT, created " ${PROJECT_NAME} " project.")
-endif( )
+else()
+    project(COLOR_DEBUG)
+    message(STATUS "COLOR_DEBUG NOT PART_OF_EXISTING_PROJECT, created " ${PROJECT_NAME} " project.")
+endif()
 
 # set include directory
 set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
@@ -45,8 +45,8 @@ if(NOT DEFINED PART_OF_EXISTING_PROJECT)
     include(CMakePackageConfigHelpers)
 
     # configure PkgConfig.cmake (build-tree)
-    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfig.cmake.in"
-                                  "${CMAKE_BINARY_DIR}/ColorDebugConfig.cmake"
+    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfig.cmake.in"
+                                  "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake"
                                   INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
                                   PATH_VARS COLOR_DEBUG_INCLUDE_DIRS COLOR_DEBUG_MODULE_PATH
                                   NO_CHECK_REQUIRED_COMPONENTS_MACRO)
@@ -56,25 +56,25 @@ if(NOT DEFINED PART_OF_EXISTING_PROJECT)
     set(COLOR_DEBUG_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # configure PkgConfig.cmake (install-tree)
-    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfig.cmake.in"
-                                  "${CMAKE_BINARY_DIR}/ColorDebugConfigForInstall.cmake"
+    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfig.cmake.in"
+                                  "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigForInstall.cmake"
                                   INSTALL_DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
                                   PATH_VARS COLOR_DEBUG_INCLUDE_DIRS COLOR_DEBUG_MODULE_PATH
                                   NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 
     # install PkgConfig.cmake
-    install(FILES "${CMAKE_BINARY_DIR}/ColorDebugConfigForInstall.cmake"
-            RENAME ColorDebugConfig.cmake
+    install(FILES "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigForInstall.cmake"
+            RENAME COLOR_DEBUGConfig.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # uninstall target configuration
     configure_file(
-        "${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfigUninstall.cmake.in"
-        "${CMAKE_BINARY_DIR}/ColorDebugConfigUninstall.cmake" @ONLY)
+        "${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfigUninstall.cmake.in"
+        "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigUninstall.cmake" @ONLY)
 
     # uninstall target creation
     add_custom_target(uninstall
-        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/ColorDebugConfigUninstall.cmake)
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigUninstall.cmake)
 else()
     # load additional options
     include(${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake)

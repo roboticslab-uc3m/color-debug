@@ -1,39 +1,39 @@
 # ColorDebug options
 
-option(ColorDebug_HIDE_ERROR "Choose if you want to compile with CD_HIDE_ERROR" FALSE)
-if(ColorDebug_HIDE_ERROR)
+option(COLOR_DEBUG_HIDE_ERROR "Choose if you want to compile with CD_HIDE_ERROR" FALSE)
+if(COLOR_DEBUG_HIDE_ERROR)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_ERROR)
 endif()
 
-option(ColorDebug_HIDE_WARNING "Choose if you want to compile with CD_HIDE_WARNING" FALSE)
-if(ColorDebug_HIDE_WARNING)
+option(COLOR_DEBUG_HIDE_WARNING "Choose if you want to compile with CD_HIDE_WARNING" FALSE)
+if(COLOR_DEBUG_HIDE_WARNING)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_WARNING)
 endif()
 
-option(ColorDebug_HIDE_SUCCESS "Choose if you want to compile with CD_HIDE_SUCCESS" FALSE)
-if(ColorDebug_HIDE_SUCCESS)
+option(COLOR_DEBUG_HIDE_SUCCESS "Choose if you want to compile with CD_HIDE_SUCCESS" FALSE)
+if(COLOR_DEBUG_HIDE_SUCCESS)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_SUCCESS)
 endif()
 
-option(ColorDebug_HIDE_INFO "Choose if you want to compile with CD_HIDE_INFO" FALSE)
-if(ColorDebug_HIDE_INFO)
+option(COLOR_DEBUG_HIDE_INFO "Choose if you want to compile with CD_HIDE_INFO" FALSE)
+if(COLOR_DEBUG_HIDE_INFO)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_INFO)
 endif()
 
-option(ColorDebug_HIDE_DEBUG "Choose if you want to compile with CD_HIDE_DEBUG" FALSE)
-if(ColorDebug_HIDE_DEBUG)
+option(COLOR_DEBUG_HIDE_DEBUG "Choose if you want to compile with CD_HIDE_DEBUG" FALSE)
+if(COLOR_DEBUG_HIDE_DEBUG)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_DEBUG)
 endif()
 
-option(ColorDebug_FULL_FILE "Choose if you want to compile with CD_FULL_FILE" FALSE)
-if(ColorDebug_FULL_FILE)
+option(COLOR_DEBUG_FULL_FILE "Choose if you want to compile with CD_FULL_FILE" FALSE)
+if(COLOR_DEBUG_FULL_FILE)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_FULL_FILE)
 endif()
 
-mark_as_advanced(ColorDebug_HIDE_ERROR
-                 ColorDebug_HIDE_WARNING
-                 ColorDebug_HIDE_SUCCESS
-                 ColorDebug_HIDE_INFO
-                 ColorDebug_HIDE_DEBUG
-                 ColorDebug_FULL_FILE)
+mark_as_advanced(COLOR_DEBUG_HIDE_ERROR
+                 COLOR_DEBUG_HIDE_WARNING
+                 COLOR_DEBUG_HIDE_SUCCESS
+                 COLOR_DEBUG_HIDE_INFO
+                 COLOR_DEBUG_HIDE_DEBUG
+                 COLOR_DEBUG_FULL_FILE)
 
