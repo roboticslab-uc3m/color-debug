@@ -4,6 +4,9 @@
 # reduce warning level with cmake 2.6
 cmake_minimum_required(VERSION 2.6)
 
+# discard any value previously set
+unset(PART_OF_EXISTING_PROJECT)
+
 if(NOT ${PROJECT_NAME} STREQUAL "Project")
     message(STATUS "ColorDebug PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
     set(PART_OF_EXISTING_PROJECT)
