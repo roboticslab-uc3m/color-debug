@@ -25,3 +25,15 @@ if(ColorDebug_HIDE_DEBUG)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_HIDE_DEBUG)
 endif()
 
+option(ColorDebug_FULL_FILE "Choose if you want to compile with CD_FULL_FILE" FALSE)
+if(ColorDebug_FULL_FILE)
+    set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_FULL_FILE)
+endif()
+
+mark_as_advanced(ColorDebug_HIDE_ERROR
+                 ColorDebug_HIDE_WARNING
+                 ColorDebug_HIDE_SUCCESS
+                 ColorDebug_HIDE_INFO
+                 ColorDebug_HIDE_DEBUG
+                 ColorDebug_FULL_FILE)
+
