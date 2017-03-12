@@ -1,8 +1,7 @@
 # Copyright: UC3M 2014 (C)
 # Author: Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
 
-# reduce warning level with cmake 2.6
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.8)
 
 # discard any value previously set
 unset(PART_OF_EXISTING_PROJECT)
