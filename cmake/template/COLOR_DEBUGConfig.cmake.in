@@ -1,0 +1,15 @@
+# Authors: Juan G Victores
+# CopyPolicy: Released under the terms of the LGPLv2.1 or later, see LGPL.TXT
+# Evident yet unstandarized names
+
+@PACKAGE_INIT@
+
+set_and_check(COLOR_DEBUG_INCLUDE_DIRS "@PACKAGE_COLOR_DEBUG_INCLUDE_DIRS@")
+set_and_check(COLOR_DEBUG_MODULE_PATH "@PACKAGE_COLOR_DEBUG_MODULE_PATH@")
+
+# additional options
+include(${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake)
+
+# we don't need this anymore
+unset(COLOR_DEBUG_MODULE_PATH)
+

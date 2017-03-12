@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.11 - Removed unnecessary namespace.
  * Version: 0.10 - Add CD_FULL_FILE define. Revive CD_PERROR.
  * Version: 0.9 - Add CD_HIDE_**** defines.
  * Version: 0.8 - stderr only on warning and error.
@@ -26,8 +27,6 @@
 #include <stdio.h>
 #include <string>  // std::string
 #include <string.h>  // strrchr
-
-namespace ColorDebug {
 
 //-- Fix for old Windows versions.
 //-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
@@ -189,8 +188,6 @@ namespace ColorDebug {
 #endif
 
 //-- ------------------------ \end Real macros ------------------------ --//
-
-} //ColorDebug
 
 #endif  // __COLOR_DEBUG_HPP__
 

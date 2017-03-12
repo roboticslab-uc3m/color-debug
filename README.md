@@ -1,45 +1,17 @@
 color-debug
 ===========
 
-Color CLI logs and more. For updated version, license and author information, see ColorDebug.hpp.
+Color CLI logs and more. For updated version, license and author information, see [ColorDebug.hpp](ColorDebug.hpp).
 
 [![Image](example/testColorDebug.png)](./)
 
 Possible usages:
 
-* Install system-wide. `mkdir -p build && cd build && cmake .. && make && sudo make install`
+* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
-* Use externally. `mkdir -p build && cd build && cmake .. && make`. Set the `ColorDebug_DIR` environment variable to your `build` path. In CMake, you will be able to `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
-* Part of a project. You will be able to `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* As part of another project: copy this repository to the desired location inside your source tree and add `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})` in CMake.
 
-An interesting setup is including the following lines in your father `CMakeLists.txt`:
-
-```
-# ColorDebug options
-option(ColorDebug_HIDE_ERROR "Choose if you want to compile with CD_HIDE_ERROR" FALSE)
-if(ColorDebug_HIDE_ERROR)
-    add_definitions(-DCD_HIDE_ERROR)
-endif(ColorDebug_HIDE_ERROR)
-
-option(ColorDebug_HIDE_WARNING "Choose if you want to compile with CD_HIDE_WARNING" FALSE)
-if(ColorDebug_HIDE_WARNING)
-    add_definitions(-DCD_HIDE_WARNING)
-endif(ColorDebug_HIDE_WARNING)
-
-option(ColorDebug_HIDE_SUCCESS "Choose if you want to compile with CD_HIDE_SUCCESS" FALSE)
-if(ColorDebug_HIDE_SUCCESS)
-    add_definitions(-DCD_HIDE_SUCCESS)
-endif(ColorDebug_HIDE_SUCCESS)
-
-option(ColorDebug_HIDE_INFO "Choose if you want to compile with CD_HIDE_INFO" FALSE)
-if(ColorDebug_HIDE_INFO)
-    add_definitions(-DCD_HIDE_INFO)
-endif(ColorDebug_HIDE_INFO)
-
-option(ColorDebug_HIDE_DEBUG "Choose if you want to compile with CD_HIDE_DEBUG" FALSE)
-if(ColorDebug_HIDE_DEBUG)
-    add_definitions(-DCD_HIDE_DEBUG)
-endif(ColorDebug_HIDE_DEBUG)
-```
+You can enable or disable specific features of color-debug by manipulating the corresponding CMake options. See [cmake/ColorDebugOptions.cmake](cmake/ColorDebugOptions.cmake) for details.
 
