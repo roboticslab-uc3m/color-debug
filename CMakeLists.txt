@@ -59,7 +59,7 @@ if(NOT DEFINED PART_OF_EXISTING_PROJECT)
     # configure PkgConfig.cmake (install-tree)
     configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfig.cmake.in"
                                   "${CMAKE_BINARY_DIR}/ColorDebugConfigForInstall.cmake"
-                                  INSTALL_DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+                                  INSTALL_DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
                                   PATH_VARS COLOR_DEBUG_INCLUDE_DIRS COLOR_DEBUG_MODULE_PATH
                                   NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 
