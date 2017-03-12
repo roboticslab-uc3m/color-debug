@@ -3,10 +3,6 @@
 
 # reduce warning level with cmake 2.6
 cmake_minimum_required(VERSION 2.6)
-#cmake policies
-if(COMMAND cmake_policy)
-  cmake_policy(SET CMP0003 NEW)
-endif(COMMAND cmake_policy)
 
 if(NOT ${PROJECT_NAME} STREQUAL "Project")
     message(STATUS "ColorDebug PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
@@ -23,7 +19,7 @@ set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} CACHE INTERNAL "appende
 install (FILES "${CMAKE_CURRENT_SOURCE_DIR}/ColorDebug.hpp"
          DESTINATION include)
 
-if( NOT ${PART_OF_EXISTING_PROJECT} )
+if(NOT DEFINED PART_OF_EXISTING_PROJECT)
     # export our variables to a ColorDebugConfig.cmake creation
     set(ColorDebug_INCLUDE_DIRS ${COLOR_DEBUG_INCLUDE_DIRS})
     configure_file(${CMAKE_SOURCE_DIR}/cmake/template/ColorDebugConfig.cmake.in
@@ -34,8 +30,8 @@ if( NOT ${PART_OF_EXISTING_PROJECT} )
         "${CMAKE_CURRENT_SOURCE_DIR}/cmake/template/ColorDebugConfigUninstall.cmake.in"
         "${CMAKE_CURRENT_BINARY_DIR}/ColorDebugConfigUninstall.cmake" IMMEDIATE @ONLY)
 
-        # uninstall target creation
-        add_custom_target(uninstall
-            COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ColorDebugConfigUninstall.cmake)
-endif( NOT ${PART_OF_EXISTING_PROJECT} )
+    # uninstall target creation
+    add_custom_target(uninstall
+        COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/ColorDebugConfigUninstall.cmake)
+endif()
 
