@@ -9,7 +9,7 @@ unset(PART_OF_EXISTING_PROJECT)
 
 if(NOT ${PROJECT_NAME} STREQUAL "Project")
     message(STATUS "ColorDebug PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
-    set(PART_OF_EXISTING_PROJECT)
+    set(PART_OF_EXISTING_PROJECT "")
 else( )
     project(ColorDebug)
     message(STATUS "ColorDebug NOT PART_OF_EXISTING_PROJECT, created " ${PROJECT_NAME} " project.")
