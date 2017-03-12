@@ -1,21 +1,21 @@
 color-debug
 ===========
 
-Color CLI logs and more. For updated version, license and author information, see ColorDebug.hpp.
+Color CLI logs and more. For updated version, license and author information, see [ColorDebug.hpp](ColorDebug.hpp).
 
 [![Image](example/testColorDebug.png)](./)
 
 Possible usages:
 
-* Install system-wide. `mkdir -p build && cd build && cmake .. && make && sudo make install`
+* Install system-wide: `mkdir -p build && cd build && cmake .. && make && sudo make install`. In CMake, you may load it with `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
-* Use externally. `mkdir -p build && cd build && cmake .. && make`. Set the `ColorDebug_DIR` environment variable to your `build` path. In CMake, you will be able to `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Use externally: `mkdir -p build && cd build && cmake .. && make`. Set the `ColorDebug_DIR` environment variable to your `build` path. In CMake, you may load with `find_package(ColorDebug)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
 
-* Part of a project. You will be able to `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* As part of another project: copy this repository to the desired location inside your source tree and add `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})` in CMake.
 
-An interesting setup is including the following lines in your father `CMakeLists.txt`:
+You can control which features of color-debug to enable/disable by including the following lines in your parent `CMakeLists.txt`:
 
-```
+```cmake
 # ColorDebug options
 option(ColorDebug_HIDE_ERROR "Choose if you want to compile with CD_HIDE_ERROR" FALSE)
 if(ColorDebug_HIDE_ERROR)
