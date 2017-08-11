@@ -17,4 +17,9 @@ unset(COLOR_DEBUG_MODULE_PATH)
 # see use case at https://github.com/roboticslab-uc3m/color-debug/issues/6
 if(NOT TARGET ROBOTICSLAB::COLOR_DEBUG)
     add_library(ROBOTICSLAB::COLOR_DEBUG UNKNOWN IMPORTED)
+
+    # assume COLOR_DEBUG is an ExternalProject target (e.g. set by YCM's find_or_build_package())
+    if(TARGET COLOR_DEBUG)
+        add_dependencies(ROBOTICSLAB::COLOR_DEBUG COLOR_DEBUG)
+    endif()
 endif()
