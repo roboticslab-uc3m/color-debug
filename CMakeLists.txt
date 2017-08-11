@@ -6,12 +6,11 @@ cmake_minimum_required(VERSION 2.8.8)
 # discard any value previously set
 unset(PART_OF_EXISTING_PROJECT)
 
-if(NOT ${PROJECT_NAME} STREQUAL "Project")
-    message(STATUS "COLOR_DEBUG PART_OF_EXISTING_PROJECT : " ${PROJECT_NAME})
-    set(PART_OF_EXISTING_PROJECT "")
+if(DEFINED PROJECT_NAME)
+    message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
+    set(PART_OF_EXISTING_PROJECT TRUE)
 else()
     project(COLOR_DEBUG)
-    message(STATUS "COLOR_DEBUG NOT PART_OF_EXISTING_PROJECT, created " ${PROJECT_NAME} " project.")
 endif()
 
 # set include directory
@@ -20,7 +19,7 @@ set(COLOR_DEBUG_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR})
 # set module path
 set(COLOR_DEBUG_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-if(NOT DEFINED PART_OF_EXISTING_PROJECT)
+if(NOT PART_OF_EXISTING_PROJECT)
     # standard installation paths
     include(GNUInstallDirs)
 
