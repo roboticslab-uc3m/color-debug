@@ -13,3 +13,8 @@ include(${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake)
 # we don't need this anymore
 unset(COLOR_DEBUG_MODULE_PATH)
 
+# dummy library target for downstreams, let them call add_dependencies() on this
+# see use case at https://github.com/roboticslab-uc3m/color-debug/issues/6
+if(NOT TARGET COLOR_DEBUG)
+    add_library(COLOR_DEBUG UNKNOWN IMPORTED)
+endif()
