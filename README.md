@@ -3,7 +3,7 @@ color-debug
 
 Color CLI logs and more. For updated version, license and author information, see [ColorDebug.hpp](ColorDebug.hpp).
 
-[![Image](example/testColorDebug.png)](./)
+[![Image](example/exampleColorDebug.png)](./)
 
 Possible usages:
 
