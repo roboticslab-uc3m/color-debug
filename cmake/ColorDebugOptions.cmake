@@ -29,11 +29,3 @@ option(COLOR_DEBUG_FULL_FILE "Choose if you want to compile with CD_FULL_FILE" F
 if(COLOR_DEBUG_FULL_FILE)
     set_property(DIRECTORY ${CMAKE_SOURCE_DIR} APPEND PROPERTY COMPILE_DEFINITIONS CD_FULL_FILE)
 endif()
-
-mark_as_advanced(COLOR_DEBUG_HIDE_ERROR
-                 COLOR_DEBUG_HIDE_WARNING
-                 COLOR_DEBUG_HIDE_SUCCESS
-                 COLOR_DEBUG_HIDE_INFO
-                 COLOR_DEBUG_HIDE_DEBUG
-                 COLOR_DEBUG_FULL_FILE)
-
