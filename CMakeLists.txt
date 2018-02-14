@@ -44,7 +44,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     include(CMakePackageConfigHelpers)
 
     # configure PkgConfig.cmake (build-tree)
-    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfig.cmake.in"
+    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/templates/COLOR_DEBUGConfig.cmake.in"
                                   "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake"
                                   INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
                                   PATH_VARS COLOR_DEBUG_INCLUDE_DIRS COLOR_DEBUG_MODULE_PATH
@@ -55,7 +55,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     set(COLOR_DEBUG_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # configure PkgConfig.cmake (install-tree)
-    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfig.cmake.in"
+    configure_package_config_file("${CMAKE_SOURCE_DIR}/cmake/templates/COLOR_DEBUGConfig.cmake.in"
                                   "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigForInstall.cmake"
                                   INSTALL_DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
                                   PATH_VARS COLOR_DEBUG_INCLUDE_DIRS COLOR_DEBUG_MODULE_PATH
@@ -68,7 +68,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
 
     # uninstall target configuration
     configure_file(
-        "${CMAKE_SOURCE_DIR}/cmake/template/COLOR_DEBUGConfigUninstall.cmake.in"
+        "${CMAKE_SOURCE_DIR}/cmake/templates/COLOR_DEBUGConfigUninstall.cmake.in"
         "${CMAKE_BINARY_DIR}/COLOR_DEBUGConfigUninstall.cmake" @ONLY)
 
     # uninstall target creation
@@ -81,4 +81,3 @@ else()
     # we don't need this anymore
     unset(COLOR_DEBUG_MODULE_PATH)
 endif()
-
