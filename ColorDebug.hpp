@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.12 - Compatibility with C, no colors on Windows for now.
  * Version: 0.11 - Removed unnecessary namespace.
  * Version: 0.10 - Add CD_FULL_FILE define. Revive CD_PERROR.
  * Version: 0.9 - Add CD_HIDE_**** defines.
@@ -25,12 +26,11 @@
 #define __COLOR_DEBUG_HPP__
 
 #include <stdio.h>
-#include <string>  // std::string
 #include <string.h>  // strrchr
 
 //-- Fix for old Windows versions.
 //-- Thanks: tomlogic @ http://stackoverflow.com/questions/2281970/cross-platform-defining-define-for-macros-function-and-func
-#if defined ( WIN32 )
+#if defined ( WIN32 ) && !defined ( __func__ )
   #define __func__ __FUNCTION__
 #endif
 
@@ -67,6 +67,25 @@
 
 //-- Color defines.
 //-- Thanks: http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
+#ifdef WIN32
+#define RESET   ""
+#define BLACK   ""      /* Black */
+#define RED     ""      /* Red */
+#define GREEN   ""      /* Green */
+#define YELLOW  ""      /* Yellow */
+#define BLUE    ""      /* Blue */
+#define MAGENTA ""      /* Magenta */
+#define CYAN    ""      /* Cyan */
+#define WHITE   ""      /* White */
+#define BOLDBLACK   ""      /* Bold Black */
+#define BOLDRED     ""      /* Bold Red */
+#define BOLDGREEN   ""      /* Bold Green */
+#define BOLDYELLOW  ""      /* Bold Yellow */
+#define BOLDBLUE    ""      /* Bold Blue */
+#define BOLDMAGENTA ""      /* Bold Magenta */
+#define BOLDCYAN    ""      /* Bold Cyan */
+#define BOLDWHITE   ""      /* Bold White */
+#else
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -84,7 +103,7 @@
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
-
+#endif
 
 //-- ------------------------ \begin Real macros ------------------------ --//
 
@@ -190,4 +209,3 @@
 //-- ------------------------ \end Real macros ------------------------ --//
 
 #endif  // __COLOR_DEBUG_HPP__
-
