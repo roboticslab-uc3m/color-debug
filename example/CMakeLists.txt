@@ -16,4 +16,4 @@ include(ColorDebugOptions)
 include_directories(BEFORE ${CD_ROOT_PATH})
 
 # Set up our main executable.
-add_executable(exampleColorDebug exampleColorDebug.cpp)
+add_executable(exampleColorDebug exampleColorDebug.c)
