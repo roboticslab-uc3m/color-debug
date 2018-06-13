@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.9)
 
 # Start a project.
-project(exampleColorDebug)
+project(exampleColorDebug C)
 
 # Path to root.
 set(CD_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
