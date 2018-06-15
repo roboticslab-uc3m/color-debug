@@ -5,15 +5,17 @@ Color CLI logs and more. For updated version, license and author information, se
 
 [![Image](examples/exampleColorDebug.png)](./)
 
+Requirements: **CMake 2.8.12**.
+
 Possible usages:
 
-* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
-* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})`.
+* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
-* As part of another project: copy this repository to the desired location inside your source tree, make it discoverable by CMake (traverse its tree with `add_subdirectory(...)`) and add `include_directories(${COLOR_DEBUG_INCLUDE_DIRS})` as usual.
+* As part of another project: copy this repository to the desired location inside your source tree, make it discoverable by CMake (traverse its tree with `add_subdirectory(...)`) and add `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)` as usual.
 
-* Pulled by [YCM](https://github.com/robotology/ycm). this is the `BuildCOLOR_DEBUG.cmake` file we use at [`kinematics-dynamics`](https://github.com/roboticslab-uc3m/kinematics-dynamics/):
+* (**discontinued, last working commit was [5b8c9fd](https://github.com/roboticslab-uc3m/color-debug/commit/5b8c9fd7e24967ecaee3369f6ef99b7683f0f6f7)**) Pulled by [YCM](https://github.com/robotology/ycm). This is the `BuildCOLOR_DEBUG.cmake` file we use at [`kinematics-dynamics`](https://github.com/roboticslab-uc3m/kinematics-dynamics/):
   ```cmake
   include(YCMEPHelper)
   
