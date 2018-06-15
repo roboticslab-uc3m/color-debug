@@ -3,7 +3,7 @@ color-debug
 
 Color CLI logs and more. For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
 
-[![Image](examples/exampleColorDebug.png)](./)
+[![Image](examples/ColorDebug.png)](./)
 
 Requirements: **CMake 2.8.12**.
 

@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 2.8.9)
 
 # Start a project.
-project(exampleColorDebug C)
+project(exampleColorDebugLocal C)
 
 # Path to root.
-set(CD_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
+set(CD_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../..")
 
 # Discover CMake modules.
 list(APPEND CMAKE_MODULE_PATH ${CD_ROOT_PATH}/cmake)
@@ -16,4 +16,4 @@ include(ColorDebugOptions)
 include_directories(BEFORE ${CD_ROOT_PATH})
 
 # Set up our main executable.
-add_executable(exampleColorDebug exampleColorDebug.c)
+add_executable(exampleColorDebugLocal ../exampleColorDebug.c)
