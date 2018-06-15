@@ -1,7 +1,7 @@
 color-debug
 ===========
 
-Color CLI logs and more. For updated version, license and author information, see [ColorDebug.hpp](ColorDebug.hpp).
+Color CLI logs and more. For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
 
 [![Image](examples/exampleColorDebug.png)](./)
 
@@ -24,7 +24,7 @@ Possible usages:
                 REPOSITORY roboticslab-uc3m/color-debug.git
                 TAG master)
   
-  # Include path to ColorDebug.hpp.
+  # Include path to ColorDebug.h.
   ExternalProject_Get_Property(COLOR_DEBUG INSTALL_DIR)
   include_directories(${INSTALL_DIR}/${CMAKE_INSTALL_INCLUDEDIR})
   
@@ -36,7 +36,7 @@ Possible usages:
       find_package(COLOR_DEBUG QUIET)
   endif()
   ```
-  Additionally, for every library or executable target that needs `ColorDebug.hpp`, you must use `add_dependencies(my_target COLOR_DEBUG)`. If you want to search for system-available `color-debug` first, add this to your root `CMakeLists.txt` after calling `find_or_build_package(COLOR_DEBUG)`:
+  Additionally, for every library or executable target that needs `ColorDebug.h`, you must use `add_dependencies(my_target COLOR_DEBUG)`. If you want to search for system-available `color-debug` first, add this to your root `CMakeLists.txt` after calling `find_or_build_package(COLOR_DEBUG)`:
   ```cmake
   if(USE_SYSTEM_COLOR_DEBUG)
       find_package(COLOR_DEBUG REQUIRED)

@@ -23,8 +23,8 @@
  * CopyPolicy: Released under the terms of the LGPLv2.1 or later, look for LGPL.TXT
  */
 
-#ifndef __COLOR_DEBUG_HPP__
-#define __COLOR_DEBUG_HPP__
+#ifndef __COLOR_DEBUG_H__
+#define __COLOR_DEBUG_H__
 
 #include <stdio.h>
 #include <string.h>  // strrchr
@@ -209,4 +209,4 @@
 
 //-- ------------------------ \end Real macros ------------------------ --//
 
-#endif  // __COLOR_DEBUG_HPP__
+#endif  // __COLOR_DEBUG_H__

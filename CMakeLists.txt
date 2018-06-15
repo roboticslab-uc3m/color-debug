@@ -41,7 +41,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     endif()
 
     # install header file
-    install(FILES ColorDebug.hpp
+    install(FILES ColorDebug.h
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
     # install CMake options module
