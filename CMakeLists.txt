@@ -33,7 +33,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     if(WIN32)
         set(COLOR_DEBUG_CMAKE_DESTINATION CMake)
     else()
-        set(COLOR_DEBUG_CMAKE_DESTINATION ${CMAKE_INSTALL_LIBDIR}/${PROJECT_NAME}/cmake)
+        set(COLOR_DEBUG_CMAKE_DESTINATION ${CMAKE_INSTALL_LIBDIR}/COLOR_DEBUG/cmake)
     endif()
 
     # install header file
@@ -49,7 +49,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
             EXPORT COLOR_DEBUG)
 
     # store the package in the user registry
-    export(PACKAGE ${PROJECT_NAME})
+    export(PACKAGE COLOR_DEBUG)
 
     include(CMakePackageConfigHelpers)
 
@@ -63,7 +63,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     # export targets (build-tree)
     export(TARGETS ColorDebug
            NAMESPACE ROBOTICSLAB::
-           FILE ${PROJECT_NAME}Targets.cmake)
+           FILE COLOR_DEBUGTargets.cmake)
 
     # specify full path at install time
     set(COLOR_DEBUG_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${COLOR_DEBUG_CMAKE_DESTINATION})
@@ -84,7 +84,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     install(EXPORT COLOR_DEBUG
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
             NAMESPACE ROBOTICSLAB::
-            FILE ${PROJECT_NAME}Targets.cmake)
+            FILE COLOR_DEBUGTargets.cmake)
 
     # uninstall target configuration
     configure_file(
