@@ -10,7 +10,7 @@ if(DEFINED PROJECT_NAME)
     message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
     set(PART_OF_EXISTING_PROJECT TRUE)
 else()
-    project(COLOR_DEBUG)
+    project(COLOR_DEBUG NONE)
 endif()
 
 # set include directory
