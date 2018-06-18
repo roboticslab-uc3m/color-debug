@@ -55,33 +55,25 @@ if(NOT PART_OF_EXISTING_PROJECT)
     # store the package in the user registry
     export(PACKAGE COLOR_DEBUG)
 
-    include(CMakePackageConfigHelpers)
+    # create a local copy of the CMake module
+    file(COPY ${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake
+         DESTINATION ${CMAKE_BINARY_DIR})
 
-    # configure PkgConfig.cmake (build-tree)
-    configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/COLOR_DEBUGConfig.cmake.in
-                                  ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake
-                                  INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
-                                  PATH_VARS COLOR_DEBUG_MODULE_PATH
-                                  NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+    # write a basic config file
+    file(WRITE ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake "
+# import targets
+include(\${CMAKE_CURRENT_LIST_DIR}/COLOR_DEBUGTargets.cmake)
+
+# load additional options
+include(\${CMAKE_CURRENT_LIST_DIR}/ColorDebugOptions.cmake)")
 
     # export targets (build-tree)
     export(TARGETS ColorDebug
            NAMESPACE ROBOTICSLAB::
            FILE COLOR_DEBUGTargets.cmake)
 
-    # specify full path at install time
-    set(COLOR_DEBUG_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${COLOR_DEBUG_CMAKE_DESTINATION})
-
-    # configure PkgConfig.cmake (install-tree)
-    configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/COLOR_DEBUGConfig.cmake.in
-                                  ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake.install
-                                  INSTALL_DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
-                                  PATH_VARS COLOR_DEBUG_MODULE_PATH
-                                  NO_CHECK_REQUIRED_COMPONENTS_MACRO)
-
     # install PkgConfig.cmake
-    install(FILES ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake.install
-            RENAME COLOR_DEBUGConfig.cmake
+    install(FILES ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # export targets (install-tree)
