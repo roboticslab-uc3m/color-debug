@@ -13,8 +13,8 @@ else()
     project(COLOR_DEBUG NONE)
 endif()
 
-# set module path
-set(COLOR_DEBUG_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# load custom CMake modules
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # create interface target
 add_library(ColorDebug INTERFACE)
@@ -23,10 +23,6 @@ add_library(ColorDebug INTERFACE)
 target_include_directories(ColorDebug INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 if(NOT PART_OF_EXISTING_PROJECT)
-    # temporarily load custom CMake modules
-    set(_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
-    list(APPEND CMAKE_MODULE_PATH ${COLOR_DEBUG_MODULE_PATH})
-
     # standard installation paths
     include(GNUInstallDirs)
 
@@ -45,7 +41,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
     # install CMake options module
-    install(FILES ${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake
+    install(FILES ${CMAKE_SOURCE_DIR}/cmake/ColorDebugOptions.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # register export set
@@ -56,7 +52,7 @@ if(NOT PART_OF_EXISTING_PROJECT)
     export(PACKAGE COLOR_DEBUG)
 
     # create a local copy of the CMake module
-    file(COPY ${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake
+    file(COPY ${CMAKE_SOURCE_DIR}/cmake/ColorDebugOptions.cmake
          DESTINATION ${CMAKE_BINARY_DIR})
 
     # write a basic config file
@@ -85,9 +81,6 @@ include(\${CMAKE_CURRENT_LIST_DIR}/ColorDebugOptions.cmake)")
     # add uninstall target
     include(AddUninstallTarget)
 
-    # restore previous state
-    set(CMAKE_MODULE_PATH ${_CMAKE_MODULE_PATH})
-
     # back compat with old header extension, remove once everybody has settled in
     execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
                     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -100,8 +93,5 @@ else()
     add_library(ROBOTICSLAB::ColorDebug ALIAS ColorDebug)
 
     # load additional options
-    include(${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake)
+    include(ColorDebugOptions)
 endif()
-
-# we don't need this anymore
-unset(COLOR_DEBUG_MODULE_PATH)
