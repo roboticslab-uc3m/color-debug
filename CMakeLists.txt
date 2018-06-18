@@ -96,12 +96,13 @@ if(NOT PART_OF_EXISTING_PROJECT)
     # restore previous state
     set(CMAKE_MODULE_PATH ${_CMAKE_MODULE_PATH})
 
-    # Back compat with old header extension, remove once everybody has settled in.
-    install(CODE "
-execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
-                \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ColorDebug.h\"
-                \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ColorDebug.hpp\")
-")
+    # back compat with old header extension, remove once everybody has settled in
+    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
+                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+    install(FILES ${CMAKE_BINARY_DIR}/ColorDebug.hpp
+            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+            OPTIONAL)
 else()
     # add alias target
     add_library(ROBOTICSLAB::ColorDebug ALIAS ColorDebug)
