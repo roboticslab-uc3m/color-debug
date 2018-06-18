@@ -12,7 +12,7 @@ list(APPEND CMAKE_MODULE_PATH ${CD_ROOT_PATH}/cmake)
 # Let users enable or disable specific CD macros.
 include(ColorDebugOptions)
 
-# Find ColorDebug.hpp.
+# Find ColorDebug.h.
 include_directories(BEFORE ${CD_ROOT_PATH})
 
 # Set up our main executable.
