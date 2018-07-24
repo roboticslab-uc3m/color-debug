@@ -9,9 +9,9 @@ Requirements: **CMake 2.8.12**.
 
 Possible usages:
 
-* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
+* Install system-wide: `mkdir -p ~/repos && cd ~/repos && git clone https://github.com/roboticslab-uc3m/color-debug && mkdir -p color-debug/build && cd color-debug/build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
-* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
+* Use externally: Skipping final `sudo make install` step, perform commands described above. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
 * As part of another project: copy this repository to the desired location inside your source tree, make it discoverable by CMake (traverse its tree with `add_subdirectory(...)`) and add `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)` as usual.
 
