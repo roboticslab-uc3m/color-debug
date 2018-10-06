@@ -81,13 +81,15 @@ include(\${CMAKE_CURRENT_LIST_DIR}/ColorDebugOptions.cmake)")
     # add uninstall target
     include(AddUninstallTarget)
 
-    # back compat with old header extension, remove once everybody has settled in
-    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
-                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+    if(UNIX)
+        # back compat with old header extension, remove once everybody has settled in
+        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
+                        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-    install(FILES ${CMAKE_BINARY_DIR}/ColorDebug.hpp
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-            OPTIONAL)
+        install(FILES ${CMAKE_BINARY_DIR}/ColorDebug.hpp
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+                OPTIONAL)
+    endif()
 else()
     # add alias target
     add_library(ROBOTICSLAB::ColorDebug ALIAS ColorDebug)
