@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.14 - Fix semicolon bug, add helper printf macros.
  * Version: 0.13 - Call fflush() to avoid issues on Windows.
  * Version: 0.12 - Compatibility with C, no colors on Windows for now.
  * Version: 0.11 - Removed unnecessary namespace.
@@ -111,62 +112,76 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 #endif
 
+#define CD_PRINTF(file, fmt, header, ...) do { \
+        fprintf(file, fmt); \
+        fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
+        fprintf(file, __VA_ARGS__); \
+        fprintf(file, RESET); \
+        fflush(file); \
+    } while (0)
+
+#define CD_PRINTF_NO_HEADER(file, fmt, ...) do { \
+        fprintf(file, fmt); \
+        fprintf(file, __VA_ARGS__); \
+        fprintf(file, RESET); \
+        fflush(file); \
+    } while (0)
+
 //-- ------------------------ \begin Real macros ------------------------ --//
 
 //-- CD_**** and their corresponding CD_****_NO_HEADER defines.
 //-- Thanks: http://en.wikipedia.org/wiki/Variadic_macro
 //-- Thanks: http://stackoverflow.com/questions/15549893/modify-printfs-via-macro-to-include-file-and-line-number-information
+
 #if defined ( CD_HIDE_ERROR )
     #define CD_ERROR(...)
-    #define CD_PERROR(...)
     #define CD_ERROR_NO_HEADER(...)
+    #define CD_PERROR(...)
 #else
-    #define CD_ERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); fflush(stderr);}
-    #define CD_PERROR(...) {fprintf(stderr,RED); do{fprintf(stderr, "[error] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr, "[error] "); perror(""); fprintf(stderr,RESET); fflush(stderr);}
+    #define CD_ERROR(...) CD_PRINTF(stderr, RED, "error", __VA_ARGS__)
+    #define CD_ERROR_NO_HEADER(...) CD_PRINTF_NO_HEADER(stderr, RED, __VA_ARGS__)
 
-    #define CD_ERROR_NO_HEADER(...) {fprintf(stderr,RED); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET); fflush(stderr);}
+    #define CD_PERROR(...) do { \
+        fprintf(stderr, RED); \
+        fprintf(stderr, "[error] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
+        fprintf(stderr, __VA_ARGS__); \
+        fprintf(stderr, "[error] "); \
+        perror(""); \
+        fprintf(stderr, RESET); \
+        fflush(stderr); \
+    } while (0)
 #endif
 
 #if defined ( CD_HIDE_WARNING )
     #define CD_WARNING(...)
     #define CD_WARNING_NO_HEADER(...)
 #else
-    #define CD_WARNING(...) {fprintf(stderr,YELLOW); do{fprintf(stderr, "[warning] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        fprintf(stderr, __VA_ARGS__);} while(0); fprintf(stderr,RESET); fflush(stderr);}
-
-    #define CD_WARNING_NO_HEADER(...) {fprintf(stderr,YELLOW); fprintf(stderr, __VA_ARGS__); fprintf(stderr,RESET); fflush(stderr);}
+    #define CD_WARNING(...) CD_PRINTF(stderr, YELLOW, "warning", __VA_ARGS__)
+    #define CD_WARNING_NO_HEADER(...) CD_PRINTF_NO_HEADER(stderr, YELLOW, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_SUCCESS )
     #define CD_SUCCESS(...)
     #define CD_SUCCESS_NO_HEADER(...)
 #else
-    #define CD_SUCCESS(...) {printf(GREEN); do{printf("[success] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        printf(__VA_ARGS__);} while(0); printf(RESET); fflush(stdout);}
-
-    #define CD_SUCCESS_NO_HEADER(...) {printf(GREEN); printf(__VA_ARGS__); printf(RESET); fflush(stdout);}
+    #define CD_SUCCESS(...) CD_PRINTF(stdout, GREEN, "success", __VA_ARGS__)
+    #define CD_SUCCESS_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, GREEN, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_INFO )
     #define CD_INFO(...)
     #define CD_INFO_NO_HEADER(...)
 #else
-    #define CD_INFO(...) {do{printf("[info] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        printf(__VA_ARGS__);} while(0); fflush(stdout);}
-
-    #define CD_INFO_NO_HEADER(...) {printf(__VA_ARGS__); fflush(stdout);}
+    #define CD_INFO(...) CD_PRINTF(stdout, WHITE, "info", __VA_ARGS__)
+    #define CD_INFO_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, WHITE, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_DEBUG )
     #define CD_DEBUG(...)
     #define CD_DEBUG_NO_HEADER(...)
 #else
-    #define CD_DEBUG(...) {printf(BLUE); do{printf("[debug] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        printf(__VA_ARGS__);} while(0); printf(RESET); fflush(stdout);}
-
-    #define CD_DEBUG_NO_HEADER(...) {printf(BLUE); printf(__VA_ARGS__); printf(RESET); fflush(stdout);}
+    #define CD_DEBUG(...) CD_PRINTF(stdout, BLUE, "debug", __VA_ARGS__)
+    #define CD_DEBUG_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, BLUE, __VA_ARGS__)
 #endif
 
 //-- ------------------------ \end Real macros ------------------------ --//
