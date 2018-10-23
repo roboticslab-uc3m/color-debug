@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.15 - Deprecate CD_PERROR, use strerror from <string.h> instead.
  * Version: 0.14 - Fix semicolon bug, add helper printf macros.
  * Version: 0.13 - Call fflush() to avoid issues on Windows.
  * Version: 0.12 - Compatibility with C, no colors on Windows for now.
@@ -136,20 +137,9 @@
 #if defined ( CD_HIDE_ERROR )
     #define CD_ERROR(...)
     #define CD_ERROR_NO_HEADER(...)
-    #define CD_PERROR(...)
 #else
     #define CD_ERROR(...) CD_FPRINTF(stderr, RED, "error", __VA_ARGS__)
     #define CD_ERROR_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, RED, __VA_ARGS__)
-
-    #define CD_PERROR(...) do { \
-        fprintf(stderr, RED); \
-        fprintf(stderr, "[error] %s:%d %s(): ", CD_FILE, __LINE__, __func__); \
-        fprintf(stderr, __VA_ARGS__); \
-        fprintf(stderr, "[error] "); \
-        perror(""); \
-        fprintf(stderr, RESET); \
-        fflush(stderr); \
-    } while (0)
 #endif
 
 #if defined ( CD_HIDE_WARNING )
@@ -183,6 +173,9 @@
     #define CD_DEBUG(...) CD_FPRINTF(stdout, BLUE, "debug", __VA_ARGS__)
     #define CD_DEBUG_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, BLUE, __VA_ARGS__)
 #endif
+
+//-- Deprecated since v0.15.
+#define CD_PERROR(...) CD_ERROR(__VA_ARGS__)
 
 //-- ------------------------ \end Real macros ------------------------ --//
 
