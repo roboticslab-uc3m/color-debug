@@ -112,7 +112,7 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 #endif
 
-#define CD_PRINTF(file, fmt, header, ...) do { \
+#define CD_FPRINTF(file, fmt, header, ...) do { \
         fprintf(file, fmt); \
         fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
         fprintf(file, __VA_ARGS__); \
@@ -120,7 +120,7 @@
         fflush(file); \
     } while (0)
 
-#define CD_PRINTF_NO_HEADER(file, fmt, ...) do { \
+#define CD_FPRINTF_NO_HEADER(file, fmt, ...) do { \
         fprintf(file, fmt); \
         fprintf(file, __VA_ARGS__); \
         fprintf(file, RESET); \
@@ -138,8 +138,8 @@
     #define CD_ERROR_NO_HEADER(...)
     #define CD_PERROR(...)
 #else
-    #define CD_ERROR(...) CD_PRINTF(stderr, RED, "error", __VA_ARGS__)
-    #define CD_ERROR_NO_HEADER(...) CD_PRINTF_NO_HEADER(stderr, RED, __VA_ARGS__)
+    #define CD_ERROR(...) CD_FPRINTF(stderr, RED, "error", __VA_ARGS__)
+    #define CD_ERROR_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, RED, __VA_ARGS__)
 
     #define CD_PERROR(...) do { \
         fprintf(stderr, RED); \
@@ -156,32 +156,32 @@
     #define CD_WARNING(...)
     #define CD_WARNING_NO_HEADER(...)
 #else
-    #define CD_WARNING(...) CD_PRINTF(stderr, YELLOW, "warning", __VA_ARGS__)
-    #define CD_WARNING_NO_HEADER(...) CD_PRINTF_NO_HEADER(stderr, YELLOW, __VA_ARGS__)
+    #define CD_WARNING(...) CD_FPRINTF(stderr, YELLOW, "warning", __VA_ARGS__)
+    #define CD_WARNING_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, YELLOW, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_SUCCESS )
     #define CD_SUCCESS(...)
     #define CD_SUCCESS_NO_HEADER(...)
 #else
-    #define CD_SUCCESS(...) CD_PRINTF(stdout, GREEN, "success", __VA_ARGS__)
-    #define CD_SUCCESS_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, GREEN, __VA_ARGS__)
+    #define CD_SUCCESS(...) CD_FPRINTF(stdout, GREEN, "success", __VA_ARGS__)
+    #define CD_SUCCESS_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, GREEN, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_INFO )
     #define CD_INFO(...)
     #define CD_INFO_NO_HEADER(...)
 #else
-    #define CD_INFO(...) CD_PRINTF(stdout, WHITE, "info", __VA_ARGS__)
-    #define CD_INFO_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, WHITE, __VA_ARGS__)
+    #define CD_INFO(...) CD_FPRINTF(stdout, WHITE, "info", __VA_ARGS__)
+    #define CD_INFO_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, WHITE, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_DEBUG )
     #define CD_DEBUG(...)
     #define CD_DEBUG_NO_HEADER(...)
 #else
-    #define CD_DEBUG(...) CD_PRINTF(stdout, BLUE, "debug", __VA_ARGS__)
-    #define CD_DEBUG_NO_HEADER(...) CD_PRINTF_NO_HEADER(stdout, BLUE, __VA_ARGS__)
+    #define CD_DEBUG(...) CD_FPRINTF(stdout, BLUE, "debug", __VA_ARGS__)
+    #define CD_DEBUG_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, BLUE, __VA_ARGS__)
 #endif
 
 //-- ------------------------ \end Real macros ------------------------ --//
