@@ -18,11 +18,11 @@
  * Version: 0.2 - Added CD_PERROR.
  * Version: 0.1 - Initial version.
  *
- * Copyright: UC3M 2014 (C)
+ * Copyright: UC3M 2018 (C)
  * Author:
  * <a href="http://roboticslab.uc3m.es/roboticslab/people/jg-victores">Juan G. Victores</a>
  *
- * CopyPolicy: Released under the terms of the LGPLv2.1 or later, look for LGPL.TXT
+ * CopyPolicy: Released under the terms of the LGPLv2.1 or later, look for LICENSE
  */
 
 #ifndef __COLOR_DEBUG_H__
