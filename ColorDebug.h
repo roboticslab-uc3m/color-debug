@@ -75,25 +75,6 @@
 
 //-- Color defines.
 //-- Thanks: http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
-#ifdef WIN32
-#define RESET   ""
-#define BLACK   ""      /* Black */
-#define RED     ""      /* Red */
-#define GREEN   ""      /* Green */
-#define YELLOW  ""      /* Yellow */
-#define BLUE    ""      /* Blue */
-#define MAGENTA ""      /* Magenta */
-#define CYAN    ""      /* Cyan */
-#define WHITE   ""      /* White */
-#define BOLDBLACK   ""      /* Bold Black */
-#define BOLDRED     ""      /* Bold Red */
-#define BOLDGREEN   ""      /* Bold Green */
-#define BOLDYELLOW  ""      /* Bold Yellow */
-#define BOLDBLUE    ""      /* Bold Blue */
-#define BOLDMAGENTA ""      /* Bold Magenta */
-#define BOLDCYAN    ""      /* Bold Cyan */
-#define BOLDWHITE   ""      /* Bold White */
-#else
 #define RESET   "\033[0m"
 #define BLACK   "\033[30m"      /* Black */
 #define RED     "\033[31m"      /* Red */
@@ -111,22 +92,34 @@
 #define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+
+#ifndef WIN32
+    #define CD_FPRINTF(file, fmt, header, ...) do { \
+            fprintf(file, fmt); \
+            fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
+            fprintf(file, __VA_ARGS__); \
+            fprintf(file, RESET); \
+            fflush(file); \
+        } while (0)
+
+    #define CD_FPRINTF_NO_HEADER(file, fmt, ...) do { \
+            fprintf(file, fmt); \
+            fprintf(file, __VA_ARGS__); \
+            fprintf(file, RESET); \
+            fflush(file); \
+        } while (0)
+#else
+    #define CD_FPRINTF(file, fmt, header, ...) do { \
+            fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
+            fprintf(file, __VA_ARGS__); \
+            fflush(file); \
+        } while (0)
+
+    #define CD_FPRINTF_NO_HEADER(file, fmt, ...) do { \
+            fprintf(file, __VA_ARGS__); \
+            fflush(file); \
+        } while (0)
 #endif
-
-#define CD_FPRINTF(file, fmt, header, ...) do { \
-        fprintf(file, fmt); \
-        fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
-        fprintf(file, __VA_ARGS__); \
-        fprintf(file, RESET); \
-        fflush(file); \
-    } while (0)
-
-#define CD_FPRINTF_NO_HEADER(file, fmt, ...) do { \
-        fprintf(file, fmt); \
-        fprintf(file, __VA_ARGS__); \
-        fprintf(file, RESET); \
-        fflush(file); \
-    } while (0)
 
 //-- ------------------------ \begin Real macros ------------------------ --//
 
