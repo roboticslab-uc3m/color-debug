@@ -1,4 +1,4 @@
-# Copyright: UC3M 2014 (C)
+# Copyright: UC3M 2018 (C)
 # Author: Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
