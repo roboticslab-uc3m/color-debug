@@ -1,5 +1,7 @@
-# Copyright: UC3M 2014 (C)
-# Author: Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
+# Copyright: UC3M 2018 (C)
+# Authors:
+# - Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
+# - Bartosz Piotr Lukawski
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
