@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.16 - Add support for Windows 10 console VT sequences.
  * Version: 0.15 - Deprecate CD_PERROR, use strerror from <string.h> instead.
  * Version: 0.14 - Fix semicolon bug, add helper printf macros.
  * Version: 0.13 - Call fflush() to avoid issues on Windows.
