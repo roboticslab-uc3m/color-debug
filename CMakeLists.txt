@@ -3,31 +3,54 @@
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-# discard any value previously set
+# discard previous values if any
 unset(PART_OF_EXISTING_PROJECT)
-
-if(DEFINED PROJECT_NAME)
-    message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
-    set(PART_OF_EXISTING_PROJECT TRUE)
-else()
-    project(COLOR_DEBUG NONE)
-endif()
+unset(SCOPE_KEYWORD)
+unset(WIN_VT_SUPPORTED)
 
 # load custom CMake modules
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-# create interface target
-add_library(ColorDebug INTERFACE)
+# check whether ColorDebug was embedded in an existing project
+if(DEFINED PROJECT_NAME)
+    message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
+    set(PART_OF_EXISTING_PROJECT TRUE)
+endif()
+
+# define our (local) project (sets CMAKE_SYSTEM_VERSION)
+project(COLOR_DEBUG NONE)
+
+# check Windows 10 compatibility
+if(WIN32 AND NOT CMAKE_SYSTEM_VERSION VERSION_LESS 10.0.10586)
+    message(STATUS "Building ColorDebug with VT color support.")
+    set(SCOPE_KEYWORD PUBLIC)
+    set(WIN_VT_SUPPORTED TRUE)
+
+    # add C as linker language
+    project(${PROJECT_NAME} C)
+else()
+    set(SCOPE_KEYWORD INTERFACE)
+endif()
+
+# create target
+if(WIN_VT_SUPPORTED)
+    add_library(ColorDebug STATIC ColorDebug.h
+                                  ColorDebug.c)
+
+    target_compile_definitions(ColorDebug ${SCOPE_KEYWORD} CD_SUPPORTS_VT)
+else()
+    add_library(ColorDebug INTERFACE)
+endif()
 
 # configure usage requirements
-target_include_directories(ColorDebug INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+target_include_directories(ColorDebug ${SCOPE_KEYWORD} $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 if(NOT PART_OF_EXISTING_PROJECT)
     # standard installation paths
     include(GNUInstallDirs)
 
     # configure install interface
-    target_include_directories(ColorDebug INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    target_include_directories(ColorDebug ${SCOPE_KEYWORD} $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
     # set installation path for CMake modules
     if(WIN32)
@@ -44,9 +67,15 @@ if(NOT PART_OF_EXISTING_PROJECT)
     install(FILES ${CMAKE_SOURCE_DIR}/cmake/ColorDebugOptions.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
-    # register export set
-    install(TARGETS ColorDebug
-            EXPORT COLOR_DEBUG)
+    # install library and/or register export set
+    if(WIN_VT_SUPPORTED)
+        install(TARGETS ColorDebug
+                EXPORT COLOR_DEBUG
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    else()
+        install(TARGETS ColorDebug
+                EXPORT COLOR_DEBUG)
+    endif()
 
     # store the package in the user registry
     export(PACKAGE COLOR_DEBUG)

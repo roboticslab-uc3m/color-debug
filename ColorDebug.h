@@ -93,8 +93,16 @@
 #define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
-#ifndef WIN32
+#if defined ( CD_SUPPORTS_VT )
+    extern void cd_enable_vt_colors(void);
+    #define CD_IF_SUPPORTS_VT(...) __VA_ARGS__
+#else
+    #define CD_IF_SUPPORTS_VT(...)
+#endif
+
+#if !defined ( WIN32 ) || defined ( CD_SUPPORTS_VT )
     #define CD_FPRINTF(file, fmt, header, ...) do { \
+            CD_IF_SUPPORTS_VT(cd_enable_vt_colors()); \
             fprintf(file, fmt); \
             fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
             fprintf(file, __VA_ARGS__); \
@@ -103,6 +111,7 @@
         } while (0)
 
     #define CD_FPRINTF_NO_HEADER(file, fmt, ...) do { \
+            CD_IF_SUPPORTS_VT(cd_enable_vt_colors()); \
             fprintf(file, fmt); \
             fprintf(file, __VA_ARGS__); \
             fprintf(file, RESET); \
