@@ -1,6 +1,9 @@
 color-debug
 ===========
 
+[![Build Status (Linux/Windows)](https://travis-ci.org/roboticslab-uc3m/color-debug.svg?branch=develop)](https://travis-ci.org/roboticslab-uc3m/color-debug)
+[![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/color-debug.svg?label=Issues)](https://github.com/roboticslab-uc3m/color-debug/issues)
+
 Color CLI logs and more. For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
 
 [![Image](examples/ColorDebug.png)](./)

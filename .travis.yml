@@ -1,0 +1,28 @@
+language: c
+
+os:
+  - linux
+  - windows
+
+before_script:
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then export CD_CFG=Release; fi
+
+  - cmake -H"$TRAVIS_BUILD_DIR" -B"$TRAVIS_BUILD_DIR/build" -DCMAKE_INSTALL_PREFIX="$TRAVIS_BUILD_DIR/build/install"
+  - cmake --build "$TRAVIS_BUILD_DIR/build" --config "$CD_CFG" --target install
+
+  - cmake -H"$TRAVIS_BUILD_DIR/examples/exampleColorDebugLocalHeader" -B"$TRAVIS_BUILD_DIR/build-exampleColorDebugLocalHeader"
+  - cmake --build "$TRAVIS_BUILD_DIR/build-exampleColorDebugLocalHeader" --config "$CD_CFG"
+
+  - cmake -H"$TRAVIS_BUILD_DIR/examples/exampleColorDebugEmbedded" -B"$TRAVIS_BUILD_DIR/build-exampleColorDebugEmbedded"
+  - cmake --build "$TRAVIS_BUILD_DIR/build-exampleColorDebugEmbedded" --config "$CD_CFG"
+
+  - cmake -H"$TRAVIS_BUILD_DIR/examples/exampleColorDebugFindPackage" -B"$TRAVIS_BUILD_DIR/build-exampleColorDebugFindPackage"
+  - cmake --build "$TRAVIS_BUILD_DIR/build-exampleColorDebugFindPackage" --config "$CD_CFG"
+
+script:
+  - $TRAVIS_BUILD_DIR/build-exampleColorDebugLocalHeader/$CD_CFG/exampleColorDebugLocalHeader
+  - $TRAVIS_BUILD_DIR/build-exampleColorDebugEmbedded/$CD_CFG/exampleColorDebugEmbedded
+  - $TRAVIS_BUILD_DIR/build-exampleColorDebugFindPackage/$CD_CFG/exampleColorDebugFindPackage
+
+after_success:
+  - cmake --build "$TRAVIS_BUILD_DIR/build" --config Release --target uninstall
