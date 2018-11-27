@@ -1,9 +1,5 @@
 language: c
 
-compiler: gcc
-
-dist: xenial
-
 os:
   - linux
   - windows
