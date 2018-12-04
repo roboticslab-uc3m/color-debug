@@ -49,3 +49,8 @@ Possible usages:
   ```
 
 You can enable or disable specific features of color-debug by manipulating the corresponding CMake options. See [cmake/ColorDebugOptions.cmake](cmake/ColorDebugOptions.cmake) for details.
+
+## Similar and Related Projects
+- https://github.com/ikalnytskyi/termcolor
+- https://github.com/rcfox/C-Header-For-ANSI-Colors
+- Much larger and known project: https://www.gnu.org/software/ncurses
