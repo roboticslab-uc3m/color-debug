@@ -95,7 +95,13 @@
 #define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 #if defined ( CD_SUPPORTS_VT )
-    extern void cd_enable_vt_colors(void);
+    #ifdef __cplusplus
+    extern "C" {
+    #endif
+        void cd_enable_vt_colors(void);
+    #ifdef __cplusplus
+    }
+    #endif
     #define CD_IF_SUPPORTS_VT(...) __VA_ARGS__
 #else
     #define CD_IF_SUPPORTS_VT(...)
