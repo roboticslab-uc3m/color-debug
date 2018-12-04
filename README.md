@@ -4,7 +4,7 @@ color-debug
 [![Build Status (Linux/Windows)](https://travis-ci.com/roboticslab-uc3m/color-debug.svg?branch=develop)](https://travis-ci.com/roboticslab-uc3m/color-debug)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/color-debug.svg?label=Issues)](https://github.com/roboticslab-uc3m/color-debug/issues)
 
-Color CLI logs and more. For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
+Color CLI logs and more. Lightweight and simple, mainly achieved via [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
 
 [![Image](examples/ColorDebug.png)](./)
 
@@ -49,3 +49,8 @@ Possible usages:
   ```
 
 You can enable or disable specific features of color-debug by manipulating the corresponding CMake options. See [cmake/ColorDebugOptions.cmake](cmake/ColorDebugOptions.cmake) for details.
+
+## Similar and Related Projects
+- https://github.com/ikalnytskyi/termcolor
+- https://github.com/rcfox/C-Header-For-ANSI-Colors
+- Much larger and known project: https://www.gnu.org/software/ncurses
