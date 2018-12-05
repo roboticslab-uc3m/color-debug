@@ -1,37 +1,58 @@
-# Copyright: UC3M 2014 (C)
-# Author: Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
+# Copyright: UC3M 2018 (C)
+# Authors:
+# - Juan G. Victores @ http://roboticslab.uc3m.es/roboticslab/people/jg-victores
+# - Bartosz Piotr Lukawski
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-# discard any value previously set
+# discard previous values if any
 unset(PART_OF_EXISTING_PROJECT)
+unset(SCOPE_KEYWORD)
+unset(WIN_VT_SUPPORTED)
 
+# load custom CMake modules
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# check whether ColorDebug was embedded in an existing project
 if(DEFINED PROJECT_NAME)
     message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
     set(PART_OF_EXISTING_PROJECT TRUE)
-else()
-    project(COLOR_DEBUG NONE)
 endif()
 
-# set module path
-set(COLOR_DEBUG_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# define our (local) project (sets CMAKE_SYSTEM_VERSION)
+project(COLOR_DEBUG NONE)
 
-# create interface target
-add_library(ColorDebug INTERFACE)
+# check Windows 10 compatibility
+if(WIN32 AND NOT CMAKE_SYSTEM_VERSION VERSION_LESS 10.0.10586)
+    message(STATUS "Building ColorDebug with VT color support.")
+    set(SCOPE_KEYWORD PUBLIC)
+    set(WIN_VT_SUPPORTED TRUE)
+
+    # add C as linker language
+    project(${PROJECT_NAME} C)
+else()
+    set(SCOPE_KEYWORD INTERFACE)
+endif()
+
+# create target
+if(WIN_VT_SUPPORTED)
+    add_library(ColorDebug STATIC ColorDebug.h
+                                  ColorDebug.c)
+
+    target_compile_definitions(ColorDebug ${SCOPE_KEYWORD} CD_SUPPORTS_VT)
+else()
+    add_library(ColorDebug INTERFACE)
+endif()
 
 # configure usage requirements
-target_include_directories(ColorDebug INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
+target_include_directories(ColorDebug ${SCOPE_KEYWORD} $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>)
 
 if(NOT PART_OF_EXISTING_PROJECT)
-    # temporarily load custom CMake modules
-    set(_CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH})
-    list(APPEND CMAKE_MODULE_PATH ${COLOR_DEBUG_MODULE_PATH})
-
     # standard installation paths
     include(GNUInstallDirs)
 
     # configure install interface
-    target_include_directories(ColorDebug INTERFACE $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+    target_include_directories(ColorDebug ${SCOPE_KEYWORD} $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
     # set installation path for CMake modules
     if(WIN32)
@@ -45,43 +66,41 @@ if(NOT PART_OF_EXISTING_PROJECT)
             DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
     # install CMake options module
-    install(FILES ${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake
+    install(FILES ${CMAKE_SOURCE_DIR}/cmake/ColorDebugOptions.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
-    # register export set
-    install(TARGETS ColorDebug
-            EXPORT COLOR_DEBUG)
+    # install library and/or register export set
+    if(WIN_VT_SUPPORTED)
+        install(TARGETS ColorDebug
+                EXPORT COLOR_DEBUG
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+    else()
+        install(TARGETS ColorDebug
+                EXPORT COLOR_DEBUG)
+    endif()
 
     # store the package in the user registry
     export(PACKAGE COLOR_DEBUG)
 
-    include(CMakePackageConfigHelpers)
+    # create a local copy of the CMake module
+    file(COPY ${CMAKE_SOURCE_DIR}/cmake/ColorDebugOptions.cmake
+         DESTINATION ${CMAKE_BINARY_DIR})
 
-    # configure PkgConfig.cmake (build-tree)
-    configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/COLOR_DEBUGConfig.cmake.in
-                                  ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake
-                                  INSTALL_DESTINATION ${CMAKE_BINARY_DIR}
-                                  PATH_VARS COLOR_DEBUG_MODULE_PATH
-                                  NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+    # write a basic config file
+    file(WRITE ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake "
+# import targets
+include(\${CMAKE_CURRENT_LIST_DIR}/COLOR_DEBUGTargets.cmake)
+
+# load additional options
+include(\${CMAKE_CURRENT_LIST_DIR}/ColorDebugOptions.cmake)")
 
     # export targets (build-tree)
     export(TARGETS ColorDebug
            NAMESPACE ROBOTICSLAB::
            FILE COLOR_DEBUGTargets.cmake)
 
-    # specify full path at install time
-    set(COLOR_DEBUG_MODULE_PATH ${CMAKE_INSTALL_PREFIX}/${COLOR_DEBUG_CMAKE_DESTINATION})
-
-    # configure PkgConfig.cmake (install-tree)
-    configure_package_config_file(${CMAKE_SOURCE_DIR}/cmake/COLOR_DEBUGConfig.cmake.in
-                                  ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake.install
-                                  INSTALL_DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION}
-                                  PATH_VARS COLOR_DEBUG_MODULE_PATH
-                                  NO_CHECK_REQUIRED_COMPONENTS_MACRO)
-
     # install PkgConfig.cmake
-    install(FILES ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake.install
-            RENAME COLOR_DEBUGConfig.cmake
+    install(FILES ${CMAKE_BINARY_DIR}/COLOR_DEBUGConfig.cmake
             DESTINATION ${COLOR_DEBUG_CMAKE_DESTINATION})
 
     # export targets (install-tree)
@@ -93,23 +112,19 @@ if(NOT PART_OF_EXISTING_PROJECT)
     # add uninstall target
     include(AddUninstallTarget)
 
-    # restore previous state
-    set(CMAKE_MODULE_PATH ${_CMAKE_MODULE_PATH})
+    if(UNIX)
+        # back compat with old header extension, remove once everybody has settled in
+        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
+                        WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
-    # back compat with old header extension, remove once everybody has settled in
-    execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink ColorDebug.h ColorDebug.hpp
-                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
-
-    install(FILES ${CMAKE_BINARY_DIR}/ColorDebug.hpp
-            DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-            OPTIONAL)
+        install(FILES ${CMAKE_BINARY_DIR}/ColorDebug.hpp
+                DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+                OPTIONAL)
+    endif()
 else()
     # add alias target
     add_library(ROBOTICSLAB::ColorDebug ALIAS ColorDebug)
 
     # load additional options
-    include(${COLOR_DEBUG_MODULE_PATH}/ColorDebugOptions.cmake)
+    include(ColorDebugOptions)
 endif()
-
-# we don't need this anymore
-unset(COLOR_DEBUG_MODULE_PATH)

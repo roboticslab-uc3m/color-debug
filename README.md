@@ -1,7 +1,10 @@
 color-debug
 ===========
 
-Color CLI logs and more. For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
+[![Build Status (Linux/Windows)](https://travis-ci.com/roboticslab-uc3m/color-debug.svg?branch=develop)](https://travis-ci.com/roboticslab-uc3m/color-debug)
+[![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/color-debug.svg?label=Issues)](https://github.com/roboticslab-uc3m/color-debug/issues)
+
+Color CLI logs and more. Lightweight and simple, mainly achieved via [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
 
 [![Image](examples/ColorDebug.png)](./)
 
@@ -9,9 +12,9 @@ Requirements: **CMake 2.8.12**.
 
 Possible usages:
 
-* Install system-wide: `mkdir -p build && cd build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
+* Install system-wide: `mkdir -p ~/repos && cd ~/repos && git clone https://github.com/roboticslab-uc3m/color-debug && mkdir -p color-debug/build && cd color-debug/build && cmake .. && sudo make install`. In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
-* Use externally: `mkdir -p build && cd build && cmake ..`. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
+* Use externally: Skipping final `sudo make install` step, perform commands described above. Set the `COLOR_DEBUG_DIR` environment variable to your `build` path (optional, `color-debug` will store this path in the user registry for use by every `cmake` run). In CMake, you may load it with `find_package(COLOR_DEBUG)` and then `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)`.
 
 * As part of another project: copy this repository to the desired location inside your source tree, make it discoverable by CMake (traverse its tree with `add_subdirectory(...)`) and add `target_link_libraries(myTarget ROBOTICSLAB::ColorDebug)` as usual.
 
@@ -46,3 +49,8 @@ Possible usages:
   ```
 
 You can enable or disable specific features of color-debug by manipulating the corresponding CMake options. See [cmake/ColorDebugOptions.cmake](cmake/ColorDebugOptions.cmake) for details.
+
+## Similar and Related Projects
+- https://github.com/ikalnytskyi/termcolor
+- https://github.com/rcfox/C-Header-For-ANSI-Colors
+- Much larger and known project: https://www.gnu.org/software/ncurses

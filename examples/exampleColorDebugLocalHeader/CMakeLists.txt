@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.9 FATAL_ERROR)
 
 # Start a project.
-project(exampleColorDebugLocal C)
+project(exampleColorDebugLocalHeader C)
 
 # Path to root.
 set(CD_ROOT_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../..")
@@ -16,4 +16,4 @@ include(ColorDebugOptions)
 include_directories(BEFORE ${CD_ROOT_PATH})
 
 # Set up our main executable.
-add_executable(exampleColorDebugLocal ../exampleColorDebug.c)
+add_executable(exampleColorDebugLocalHeader ../exampleColorDebug.c)
