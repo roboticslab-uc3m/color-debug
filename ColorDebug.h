@@ -107,7 +107,7 @@
     #define CD_IF_SUPPORTS_VT(...)
 #endif
 
-#if !defined ( WIN32 ) || defined ( CD_SUPPORTS_VT )
+#if !defined ( CD_NO_COLOR ) && ( !defined ( WIN32 ) || defined ( CD_SUPPORTS_VT ) )
     #define CD_FPRINTF(file, fmt, header, ...) do { \
             CD_IF_SUPPORTS_VT(cd_enable_vt_colors()); \
             fprintf(file, fmt); \
