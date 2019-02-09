@@ -25,4 +25,4 @@ script:
   - $TRAVIS_BUILD_DIR/build-exampleColorDebugFindPackage/$CD_CFG/exampleColorDebugFindPackage
 
 after_success:
-  - cmake --build "$TRAVIS_BUILD_DIR/build" --config Release --target uninstall
+  - cmake --build "$TRAVIS_BUILD_DIR/build" --config "$CD_CFG" --target uninstall
