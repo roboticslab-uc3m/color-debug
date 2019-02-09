@@ -2,6 +2,7 @@
 
 /**
  * ColorDebug
+ * Version: 0.17 - Allow downstreams to disable colors, rename color tags.
  * Version: 0.16 - Add support for Windows 10 console VT sequences.
  * Version: 0.15 - Deprecate CD_PERROR, use strerror from <string.h> instead.
  * Version: 0.14 - Fix semicolon bug, add helper printf macros.
@@ -76,23 +77,23 @@
 
 //-- Color defines.
 //-- Thanks: http://stackoverflow.com/questions/1961209/making-some-text-in-printf-appear-in-green-and-red
-#define RESET   "\033[0m"
-#define BLACK   "\033[30m"      /* Black */
-#define RED     "\033[31m"      /* Red */
-#define GREEN   "\033[32m"      /* Green */
-#define YELLOW  "\033[33m"      /* Yellow */
-#define BLUE    "\033[34m"      /* Blue */
-#define MAGENTA "\033[35m"      /* Magenta */
-#define CYAN    "\033[36m"      /* Cyan */
-#define WHITE   "\033[37m"      /* White */
-#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
-#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
-#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
-#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
-#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
-#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
-#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
-#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
+#define CD_RESET   "\033[0m"
+#define CD_BLACK   "\033[30m"      /* Black */
+#define CD_RED     "\033[31m"      /* Red */
+#define CD_GREEN   "\033[32m"      /* Green */
+#define CD_YELLOW  "\033[33m"      /* Yellow */
+#define CD_BLUE    "\033[34m"      /* Blue */
+#define CD_MAGENTA "\033[35m"      /* Magenta */
+#define CD_CYAN    "\033[36m"      /* Cyan */
+#define CD_WHITE   "\033[37m"      /* White */
+#define CD_BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define CD_BOLDRED     "\033[1m\033[31m"      /* Bold Red */
+#define CD_BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
+#define CD_BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
+#define CD_BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
+#define CD_BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
+#define CD_BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
+#define CD_BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
 #if defined ( CD_SUPPORTS_VT )
     #ifdef __cplusplus
@@ -107,13 +108,13 @@
     #define CD_IF_SUPPORTS_VT(...)
 #endif
 
-#if !defined ( WIN32 ) || defined ( CD_SUPPORTS_VT )
+#if !defined ( CD_NO_COLOR ) && ( !defined ( WIN32 ) || defined ( CD_SUPPORTS_VT ) )
     #define CD_FPRINTF(file, fmt, header, ...) do { \
             CD_IF_SUPPORTS_VT(cd_enable_vt_colors()); \
             fprintf(file, fmt); \
             fprintf(file, "[%s] %s:%d %s(): ", header, CD_FILE, __LINE__, __func__); \
             fprintf(file, __VA_ARGS__); \
-            fprintf(file, RESET); \
+            fprintf(file, CD_RESET); \
             fflush(file); \
         } while (0)
 
@@ -121,7 +122,7 @@
             CD_IF_SUPPORTS_VT(cd_enable_vt_colors()); \
             fprintf(file, fmt); \
             fprintf(file, __VA_ARGS__); \
-            fprintf(file, RESET); \
+            fprintf(file, CD_RESET); \
             fflush(file); \
         } while (0)
 #else
@@ -147,44 +148,63 @@
     #define CD_ERROR(...)
     #define CD_ERROR_NO_HEADER(...)
 #else
-    #define CD_ERROR(...) CD_FPRINTF(stderr, RED, "error", __VA_ARGS__)
-    #define CD_ERROR_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, RED, __VA_ARGS__)
+    #define CD_ERROR(...) CD_FPRINTF(stderr, CD_RED, "error", __VA_ARGS__)
+    #define CD_ERROR_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, CD_RED, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_WARNING )
     #define CD_WARNING(...)
     #define CD_WARNING_NO_HEADER(...)
 #else
-    #define CD_WARNING(...) CD_FPRINTF(stderr, YELLOW, "warning", __VA_ARGS__)
-    #define CD_WARNING_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, YELLOW, __VA_ARGS__)
+    #define CD_WARNING(...) CD_FPRINTF(stderr, CD_YELLOW, "warning", __VA_ARGS__)
+    #define CD_WARNING_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stderr, CD_YELLOW, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_SUCCESS )
     #define CD_SUCCESS(...)
     #define CD_SUCCESS_NO_HEADER(...)
 #else
-    #define CD_SUCCESS(...) CD_FPRINTF(stdout, GREEN, "success", __VA_ARGS__)
-    #define CD_SUCCESS_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, GREEN, __VA_ARGS__)
+    #define CD_SUCCESS(...) CD_FPRINTF(stdout, CD_GREEN, "success", __VA_ARGS__)
+    #define CD_SUCCESS_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, CD_GREEN, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_INFO )
     #define CD_INFO(...)
     #define CD_INFO_NO_HEADER(...)
 #else
-    #define CD_INFO(...) CD_FPRINTF(stdout, WHITE, "info", __VA_ARGS__)
-    #define CD_INFO_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, WHITE, __VA_ARGS__)
+    #define CD_INFO(...) CD_FPRINTF(stdout, CD_WHITE, "info", __VA_ARGS__)
+    #define CD_INFO_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, CD_WHITE, __VA_ARGS__)
 #endif
 
 #if defined ( CD_HIDE_DEBUG )
     #define CD_DEBUG(...)
     #define CD_DEBUG_NO_HEADER(...)
 #else
-    #define CD_DEBUG(...) CD_FPRINTF(stdout, BLUE, "debug", __VA_ARGS__)
-    #define CD_DEBUG_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, BLUE, __VA_ARGS__)
+    #define CD_DEBUG(...) CD_FPRINTF(stdout, CD_BLUE, "debug", __VA_ARGS__)
+    #define CD_DEBUG_NO_HEADER(...) CD_FPRINTF_NO_HEADER(stdout, CD_BLUE, __VA_ARGS__)
 #endif
 
 //-- Deprecated since v0.15.
 #define CD_PERROR(...) CD_ERROR(__VA_ARGS__)
+
+//-- Deprecated since v0.17.
+#define RESET   CD_RESET
+#define BLACK   CD_BLACK
+#define RED     CD_RED
+#define GREEN   CD_GREEN
+#define YELLOW  CD_YELLOW
+#define BLUE    CD_BLUE
+#define MAGENTA CD_MAGENTA
+#define CYAN    CD_CYAN
+#define WHITE   CD_WHITE
+#define BOLDBLACK   CD_BOLDBLACK
+#define BOLDRED     CD_BOLDRED
+#define BOLDGREEN   CD_BOLDGREEN
+#define BOLDYELLOW  CD_BOLDYELLOW
+#define BOLDBLUE    CD_BOLDBLUE
+#define BOLDMAGENTA CD_BOLDMAGENTA
+#define BOLDCYAN    CD_BOLDCYAN
+#define BOLDWHITE   CD_BOLDWHITE
 
 //-- ------------------------ \end Real macros ------------------------ --//
 
