@@ -50,6 +50,8 @@ Possible usages:
 
 You can enable or disable specific features of color-debug by manipulating the corresponding CMake options. See [cmake/ColorDebugOptions.cmake](cmake/ColorDebugOptions.cmake) for details.
 
+This utility adheres to the informal [`NO_COLOR` standard](https://no-color.org/), that is, ANSI color escape codes will not be generated in your ColorDebug-dependent project if the `NO_COLOR` environmental variable is defined (regardless of its value).
+
 ## Similar and Related Projects
 - https://github.com/ikalnytskyi/termcolor
 - https://github.com/rcfox/C-Header-For-ANSI-Colors
