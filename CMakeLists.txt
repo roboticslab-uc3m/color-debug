@@ -14,9 +14,11 @@ unset(_win_vt_supported)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # check whether ColorDebug was embedded in an existing project
-if(DEFINED PROJECT_NAME)
+# https://stackoverflow.com/a/25217937
+get_directory_property(_part_of_existing_project PARENT_DIRECTORY)
+
+if(_part_of_existing_project)
     message(STATUS "COLOR_DEBUG part of existing project: ${PROJECT_NAME}")
-    set(_part_of_existing_project TRUE)
 endif()
 
 # define our (local) project (sets CMAKE_SYSTEM_VERSION)
