@@ -1,7 +1,7 @@
 color-debug
 ===========
 
-[![Build Status (Linux/Windows)](https://travis-ci.com/roboticslab-uc3m/color-debug.svg?branch=develop)](https://travis-ci.com/roboticslab-uc3m/color-debug)
+[![Build Status (Linux/Windows)](https://travis-ci.com/roboticslab-uc3m/color-debug.svg?branch=master)](https://travis-ci.com/roboticslab-uc3m/color-debug)
 [![Issues](https://img.shields.io/github/issues/roboticslab-uc3m/color-debug.svg?label=Issues)](https://github.com/roboticslab-uc3m/color-debug/issues)
 
 Color CLI logs and more. Lightweight and simple, mainly achieved via [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code). For updated version, license and author information, see [ColorDebug.h](ColorDebug.h).
