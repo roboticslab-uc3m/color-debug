@@ -1,5 +1,4 @@
 name: Continuous Integration
-
 on: [push, pull_request]
 
 defaults:
@@ -8,6 +7,7 @@ defaults:
 
 jobs:
   build:
+    name: Main build (${{matrix.os}})
     runs-on: ${{matrix.os}}
 
     strategy:
@@ -15,51 +15,35 @@ jobs:
         include:
         - os: ubuntu-latest
           build-type-opt: -DCMAKE_BUILD_TYPE=Release
-
         - os: windows-latest
           build-config-opt: --config Release
           bin-subdir: Release
 
-    name: Main build (${{matrix.os}})
-
     steps:
     - uses: actions/checkout@v2
 
-    - name: Configure CMake
-      run: cmake -S . -B ./build -DCMAKE_INSTALL_PREFIX=build/install ${{matrix.build-type-opt}}
+    - name: Build and install main project
+      run: |
+        cmake -S . -B ./build -DCMAKE_INSTALL_PREFIX=build/install ${{matrix.build-type-opt}}
+        cmake --build ./build ${{matrix.build-config-opt}} --target install
 
-    - name: Build project
-      run: cmake --build ./build ${{matrix.build-config-opt}}
+    - name: Build and test exampleColorDebugLocalHeader
+      run: |
+        cmake -S ./examples/exampleColorDebugLocalHeader -B ./build-exampleColorDebugLocalHeader ${{matrix.build-type-opt}}
+        cmake --build ./build-exampleColorDebugLocalHeader ${{matrix.build-config-opt}}
+        ./build-exampleColorDebugLocalHeader/${{matrix.bin-subdir}}/exampleColorDebugLocalHeader
 
-    - name: Install project
-      run: cmake --install ./build ${{matrix.build-config-opt}}
+    - name: Build and test exampleColorDebugEmbedded
+      run: |
+        cmake -S ./examples/exampleColorDebugEmbedded -B ./build-exampleColorDebugEmbedded ${{matrix.build-type-opt}}
+        cmake --build ./build-exampleColorDebugEmbedded ${{matrix.build-config-opt}}
+        ./build-exampleColorDebugEmbedded/${{matrix.bin-subdir}}/exampleColorDebugEmbedded
 
-    - name: Configure exampleColorDebugLocalHeader
-      run: cmake -S ./examples/exampleColorDebugLocalHeader -B ./build-exampleColorDebugLocalHeader ${{matrix.build-type-opt}}
-
-    - name: Build exampleColorDebugLocalHeader
-      run: cmake --build ./build-exampleColorDebugLocalHeader ${{matrix.build-config-opt}}
-
-    - name: Test exampleColorDebugLocalHeader
-      run: ./build-exampleColorDebugLocalHeader/${{matrix.bin-subdir}}/exampleColorDebugLocalHeader
-
-    - name: Configure exampleColorDebugEmbedded
-      run: cmake -S ./examples/exampleColorDebugEmbedded -B ./build-exampleColorDebugEmbedded ${{matrix.build-type-opt}}
-
-    - name: Build exampleColorDebugEmbedded
-      run: cmake --build ./build-exampleColorDebugEmbedded ${{matrix.build-config-opt}}
-
-    - name: Test exampleColorDebugEmbedded
-      run: ./build-exampleColorDebugEmbedded/${{matrix.bin-subdir}}/exampleColorDebugEmbedded
-
-    - name: Configure exampleColorDebugFindPackage
-      run: cmake -S ./examples/exampleColorDebugFindPackage -B ./build-exampleColorDebugFindPackage ${{matrix.build-type-opt}}
-
-    - name: Build exampleColorDebugFindPackage
-      run: cmake --build ./build-exampleColorDebugFindPackage ${{matrix.build-config-opt}}
-
-    - name: Test exampleColorDebugFindPackage
-      run: ./build-exampleColorDebugFindPackage/${{matrix.bin-subdir}}/exampleColorDebugFindPackage
+    - name: Build and test exampleColorDebugFindPackage
+      run: |
+        cmake -S ./examples/exampleColorDebugFindPackage -B ./build-exampleColorDebugFindPackage ${{matrix.build-type-opt}}
+        cmake --build ./build-exampleColorDebugFindPackage ${{matrix.build-config-opt}}
+        ./build-exampleColorDebugFindPackage/${{matrix.bin-subdir}}/exampleColorDebugFindPackage
 
     - name: Uninstall project
       run: cmake --build ./build ${{matrix.build-config-opt}} --target uninstall
