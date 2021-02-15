@@ -1,0 +1,65 @@
+name: Continuous Integration
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+
+    strategy:
+      matrix:
+        include:
+        - os: ubuntu-latest
+          build-type-opt: -DCMAKE_BUILD_TYPE=Release
+
+        - os: windows-latest
+          build-config-opt: --config Release
+          bin-subdir: Release
+
+    name: Main build (${{matrix.os}})
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Configure CMake
+      run: cmake -S . -B ./build -DCMAKE_INSTALL_PREFIX=build/install ${{matrix.build-type-opt}}
+
+    - name: Build project
+      run: cmake --build ./build ${{matrix.build-config-opt}}
+
+    - name: Install project
+      run: cmake --install ./build ${{matrix.build-config-opt}}
+
+    - name: Configure exampleColorDebugLocalHeader
+      run: cmake -S ./examples/exampleColorDebugLocalHeader -B ./build-exampleColorDebugLocalHeader ${{matrix.build-type-opt}}
+
+    - name: Build exampleColorDebugLocalHeader
+      run: cmake --build ./build-exampleColorDebugLocalHeader ${{matrix.build-config-opt}}
+
+    - name: Test exampleColorDebugLocalHeader
+      run: ./build-exampleColorDebugLocalHeader/${{matrix.bin-subdir}}/exampleColorDebugLocalHeader
+
+    - name: Configure exampleColorDebugEmbedded
+      run: cmake -S ./examples/exampleColorDebugEmbedded -B ./build-exampleColorDebugEmbedded ${{matrix.build-type-opt}}
+
+    - name: Build exampleColorDebugEmbedded
+      run: cmake --build ./build-exampleColorDebugEmbedded ${{matrix.build-config-opt}}
+
+    - name: Test exampleColorDebugEmbedded
+      run: ./build-exampleColorDebugEmbedded/${{matrix.bin-subdir}}/exampleColorDebugEmbedded
+
+    - name: Configure exampleColorDebugFindPackage
+      run: cmake -S ./examples/exampleColorDebugFindPackage -B ./build-exampleColorDebugFindPackage ${{matrix.build-type-opt}}
+
+    - name: Build exampleColorDebugFindPackage
+      run: cmake --build ./build-exampleColorDebugFindPackage ${{matrix.build-config-opt}}
+
+    - name: Test exampleColorDebugFindPackage
+      run: ./build-exampleColorDebugFindPackage/${{matrix.bin-subdir}}/exampleColorDebugFindPackage
+
+    - name: Uninstall project
+      run: cmake --build ./build ${{matrix.build-config-opt}} --target uninstall
